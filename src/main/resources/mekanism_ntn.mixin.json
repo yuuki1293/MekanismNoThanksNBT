@@ -8,5 +8,6 @@
   "refmap": "mekanism_ntn.mixin-refmap.json",
   "minVersion": "0.8",
   "mixins": [
+    "BlockMekanismMixin"
   ]
 }
