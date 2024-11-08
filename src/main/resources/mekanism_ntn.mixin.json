@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "yuuki1293.mekanism_ntn.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "loooxbotania.mixin-refmap.json",
+  "minVersion": "0.8",
+  "mixins": [
+  ]
+}
