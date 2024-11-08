@@ -30,11 +30,6 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-
-            args "-mixin.config=mekanism_ntn.mixin.json"
-
             mods {
                 "${mod_id}" {
                     source sourceSets.main
@@ -44,27 +39,18 @@ minecraft {
 
         client {
             property 'forge.enabledGameTestNamespaces', mod_id
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-
-            args "-mixin.config=mekanism_ntn.mixin.json"
-
         }
 
         server {
             property 'forge.enabledGameTestNamespaces', mod_id
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
 
-            args "--nogui -mixin.config=mekanism_ntn.mixin.json"
+            args "--nogui"
         }
 
         gameTestServer {
             property 'forge.enabledGameTestNamespaces', mod_id
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
 
-            args "--nogui -mixin.config=mekanism_ntn.mixin.json"
+            args "--nogui"
         }
 
         data {
@@ -83,6 +69,7 @@ repositories {
 
 mixin {
     add sourceSets.main, "mekanism_ntn.mixin-refmap.json"
+    config "mekanism_ntn.mixin.json"
 }
 
 dependencies {
@@ -90,16 +77,10 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     // Mekanism
-    implementation(fg.deobf("mekanism:Mekanism:${mekanism_version}"))
+    implementation(fg.deobf("mekanism:Mekanism:${minecraft_version}-${mekanism_version}"))
 
     // JEI
     runtimeOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}"))
-
-    // Mixin Extra
-    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
-    implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.4.1")) {
-        jarJar.ranged(it, "[0.4.1,)")
-    }
 }
 
 tasks.named('processResources', ProcessResources).configure {
