@@ -30,6 +30,8 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
+            jvmArgs '-Doffline=true'
+
             mods {
                 "${mod_id}" {
                     source sourceSets.main

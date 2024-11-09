@@ -35,17 +35,30 @@ public abstract class BlockMekanismMixin {
             if (tile instanceof TileEntityMekanism) {
                 // Drop Inventory Items
                 if (ItemDataUtils.hasData(drop, NBTConstants.ITEMS, Tag.TAG_LIST)) {
-                    final ListTag items = ItemDataUtils.getList(drop, NBTConstants.ITEMS);
-                    final int count = DataHandlerUtils.getMaxId(items, NBTConstants.ITEM);
-                    final List<ItemStack> itemStacks = new ArrayList<>(count);
+                    ListTag items = ItemDataUtils.getList(drop, NBTConstants.ITEMS);
+                    int count = DataHandlerUtils.getMaxId(items, NBTConstants.ITEM);
                     for (int i = 0; i < count; i++) {
-                        itemStacks.add(ItemStack.of(items.getCompound(i).getCompound(NBTConstants.ITEM)));
+                        var itemCompound = items.getCompound(i);
+                        var itemTag = itemCompound.getCompound(NBTConstants.ITEM);
+                        if (itemCompound.contains(NBTConstants.SIZE_OVERRIDE)) { // bin
+                            var stackSize = itemCompound.getInt(NBTConstants.SIZE_OVERRIDE);
+                            List<ItemStack> partial = new ArrayList<>();
+                            while(stackSize > 0){
+                                var amount = Math.min(stackSize, 64);
+                                stackSize -= amount;
+                                var newStack = ItemStack.of(itemTag);
+                                newStack.setCount(amount);
+                                partial.add(newStack);
+                            }
+                            drops.addAll(partial);
+                        } else {
+                            drops.add(ItemStack.of(itemTag));
+                        }
                     }
-                    drops.addAll(itemStacks);
                 }
 
                 // Drop Upgrades
-                if(ItemDataUtils.hasData(drop, NBTConstants.COMPONENT_UPGRADE, Tag.TAG_COMPOUND)){
+                if (ItemDataUtils.hasData(drop, NBTConstants.COMPONENT_UPGRADE, Tag.TAG_COMPOUND)) {
                     final var upgrades = Upgrade.buildMap(ItemDataUtils.getCompound(drop, NBTConstants.COMPONENT_UPGRADE));
                     upgrades.forEach((upgrade, count) -> {
                         final var upgradeStack = UpgradeUtils.getStack(upgrade, count);
