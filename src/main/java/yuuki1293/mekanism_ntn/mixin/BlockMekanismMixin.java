@@ -81,6 +81,17 @@ public abstract class BlockMekanismMixin {
                 final var upgradeStack = UpgradeUtils.getStack(upgrade, count);
                 drops.add(upgradeStack);
             });
+
+            var upgradeCompound = ItemDataUtils.getCompound(drop, NBTConstants.COMPONENT_UPGRADE);
+            if(upgradeCompound.contains(NBTConstants.ITEMS, Tag.TAG_LIST)){
+                var items = upgradeCompound.getList(NBTConstants.ITEMS, Tag.TAG_COMPOUND);
+                var count = items.size();
+                for (int i = 0; i < count; i++) {
+                    var itemCompound = items.getCompound(i);
+                    var itemTag = itemCompound.getCompound(NBTConstants.ITEM);
+                    drops.add(ItemStack.of(itemTag));
+                }
+            }
         }
         // endregion Drop Upgrades
 
