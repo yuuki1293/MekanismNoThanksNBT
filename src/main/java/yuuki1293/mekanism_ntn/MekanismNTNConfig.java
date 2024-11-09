@@ -2,12 +2,12 @@ package yuuki1293.mekanism_ntn;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class MekanismNTNConfig {
     private static final List<String> defaultWhiteList = List.of();
-    private static final List<String> defaultBlackList = Arrays.asList(
+    private static final List<String> defaultBlackList = Stream.of(
         "basic_bin", "advanced_bin", "elite_bin", "ultimate_bin", "creative_bin", // All Bins
         "basic_induction_cell", "advanced_induction_cell", "elite_induction_cell", "ultimate_induction_cell", // All Induction Cells
         "digital_miner", // Digital Miner
@@ -17,7 +17,7 @@ public class MekanismNTNConfig {
         "basic_energy_cube", "advanced_energy_cube", "elite_energy_cube", "ultimate_energy_cube", "creative_energy_cube", // All Energy Cubes
         "basic_chemical_tank", "advanced_chemical_tank", "elite_chemical_tank", "ultimate_chemical_tank", "creative_chemical_tank", // All Chemical Tanks
         "cardboard_box" // CardBoard Box
-    );
+    ).map(value -> "mekanism:" + value).toList();
 
     public static final ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
     public static final ForgeConfigSpec.BooleanValue Enabled;
