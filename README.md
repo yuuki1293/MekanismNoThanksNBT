@@ -10,7 +10,6 @@ Added from `mekanism_ntn-common.toml`.
 Most blocks work fine when removed from the blacklist.　
 
 * basic_bin
-* basic_bin
 * advanced_bin
 * elite_bin
 * ultimate_bin
