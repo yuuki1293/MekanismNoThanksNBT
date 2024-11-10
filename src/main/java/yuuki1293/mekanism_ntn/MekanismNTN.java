@@ -17,7 +17,7 @@ public class MekanismNTN {
 
     public MekanismNTN() {
         MinecraftForge.EVENT_BUS.register(this);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MekanismNTNConfig.builder.build());
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, MekanismNTNConfig.builder.build());
         LOGGER.debug("Mekanism NTN config loaded");
     }
 }
