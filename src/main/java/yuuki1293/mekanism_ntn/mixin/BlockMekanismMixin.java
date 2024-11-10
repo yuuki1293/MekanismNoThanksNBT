@@ -4,6 +4,7 @@ import mekanism.api.NBTConstants;
 import mekanism.api.Upgrade;
 import mekanism.common.block.BlockMekanism;
 import mekanism.common.block.interfaces.IHasTileEntity;
+import mekanism.common.tags.MekanismTags;
 import mekanism.common.tile.base.TileEntityMekanism;
 import mekanism.common.util.ItemDataUtils;
 import mekanism.common.util.UpgradeUtils;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -35,6 +37,11 @@ public abstract class BlockMekanismMixin {
         BlockEntity tile = hasTile.createDummyBlockEntity(state);
         if (!(tile instanceof TileEntityMekanism)) return; // Block is Mekanism BlockEntity
         // Execute if block is Mekanism block
+
+        var tool = builder.getParameter(LootContextParams.TOOL);
+        if (tool.is(MekanismTags.Items.TOOLS_WRENCH)
+        || tool.isEmpty()) return;
+        // Execute if player don't use wrench
 
         var registryName = block.getRegistryName();
         var blacklist = Blacklist.get().stream().map(ResourceLocation::tryParse).toList();
