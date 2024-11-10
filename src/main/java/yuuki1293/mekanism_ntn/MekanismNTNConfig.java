@@ -15,8 +15,7 @@ public class MekanismNTNConfig {
         "logistical_sorter", // Logistical Sorter
         "basic_fluid_tank", "advanced_fluid_tank", "elite_fluid_tank", "ultimate_fluid_tank", "creative_fluid_tank", // All Fluid Tanks
         "basic_energy_cube", "advanced_energy_cube", "elite_energy_cube", "ultimate_energy_cube", "creative_energy_cube", // All Energy Cubes
-        "basic_chemical_tank", "advanced_chemical_tank", "elite_chemical_tank", "ultimate_chemical_tank", "creative_chemical_tank", // All Chemical Tanks
-        "cardboard_box" // CardBoard Box
+        "basic_chemical_tank", "advanced_chemical_tank", "elite_chemical_tank", "ultimate_chemical_tank", "creative_chemical_tank" // All Chemical Tanks
     ).map(value -> "mekanism:" + value).toList();
 
     public static final ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
